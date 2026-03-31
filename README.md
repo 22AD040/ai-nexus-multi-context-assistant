@@ -74,6 +74,11 @@ It mimics a **real-world AI assistant (like ChatGPT)** with memory, context awar
 
 ## 📸 Screenshots
 
+### 📁 Home Page
+![Home](assets/home.png)
+
+---
+
 ### 💬 Chat Mode
 ![Chat](assets/chat.png)
 
@@ -101,7 +106,7 @@ It mimics a **real-world AI assistant (like ChatGPT)** with memory, context awar
 
 ## 🧠 Tech Stack
 
-| Technology        | Purpose                     |
+| Technology       | Purpose                   |
 |------------------|---------------------------|
 | Streamlit        | Frontend UI               |
 | LangChain        | LLM orchestration         |
@@ -117,18 +122,18 @@ It mimics a **real-world AI assistant (like ChatGPT)** with memory, context awar
 ai-nexus/
 │
 ├── app/
-│   ├── main.py        # Streamlit UI
-│   ├── modes.py       # Mode logic
-│   ├── memory.py      # FAISS memory
-│   ├── llm.py         # Gemini model
-│   ├── tools.py       # ToolMessage (calculator)
+│   ├── main.py        
+│   ├── modes.py       
+│   ├── memory.py      
+│   ├── llm.py         
+│   ├── tools.py       
 │
 ├── core/
-│   ├── config.py      # API config
-│   ├── prompts.py     # System prompts
+│   ├── config.py      
+│   ├── prompts.py     
 │
-├── assets/            # Screenshots
-├── data/              # (optional FAISS storage)
+├── assets/            
+├── data/              
 ├── requirements.txt
 ├── README.md
 ├── LICENSE
