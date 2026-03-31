@@ -2,7 +2,6 @@ import streamlit as st
 import sys
 import os
 
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from langchain_core.messages import HumanMessage, AIMessage
@@ -10,9 +9,7 @@ from app.modes import run_mode
 
 st.set_page_config(page_title="AI Nexus", layout="wide")
 
-
 st.title("🧠 AI Nexus Assistant")
-
 
 with st.sidebar:
     st.header("⚙️ Controls")
@@ -21,11 +18,12 @@ with st.sidebar:
         "chat", "code", "academic", "prompt", "translate"
     ])
 
-
     if st.button("🆕 New Chat"):
         st.session_state.history = []
         st.success("New chat started!")
 
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 if "current_mode" not in st.session_state:
     st.session_state.current_mode = mode
@@ -33,11 +31,6 @@ if "current_mode" not in st.session_state:
 if st.session_state.current_mode != mode:
     st.session_state.history = []
     st.session_state.current_mode = mode
-
-
-if "history" not in st.session_state:
-    st.session_state.history = []
-
 
 for msg in st.session_state.history:
     if isinstance(msg, HumanMessage):
@@ -48,14 +41,14 @@ for msg in st.session_state.history:
             st.write(msg.content)
 
 def get_spinner(mode):
-    spinners = {
+    return {
         "chat": "💬 Thinking...",
         "code": "💻 Writing code...",
         "academic": "📚 Explaining concept...",
         "prompt": "✨ Generating prompt...",
         "translate": "🌍 Translating..."
-    }
-    return spinners.get(mode, "Thinking...")
+    }.get(mode, "Thinking...")
+
 
 user_input = st.chat_input("Type your message...")
 
@@ -69,7 +62,13 @@ if user_input:
         with st.spinner(get_spinner(mode)):
             try:
                 response = run_mode(mode, user_input, st.session_state.history)
-                st.session_state.history.append(response)
-                st.write(response.content)
+
+               
+                if response and hasattr(response, "content"):
+                    st.session_state.history.append(response)
+                    st.write(response.content)
+                else:
+                    st.error("Empty response from model")
+
             except Exception as e:
                 st.error(f"Error: {e}")
